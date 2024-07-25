@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Details</title>
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        function goToPage2() {
+            window.location.href = 'page2.html';
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const form2Data = JSON.parse(localStorage.getItem('form2Data'));
+
+            const container = document.querySelector('.container');
+            const form = document.createElement('form');
+            form.setAttribute('action', 'submit.html');
+            form.setAttribute('method', 'post');
+
+            if (form2Data) {
+                console.log("---->", form2Data)
+                for (const key in form2Data) {
+                    if (form2Data[key]) {
+                        const fieldset = document.createElement('fieldset');
+                        const legend = document.createElement('legend');
+                        // legend.textContent = key.replace(/-/g, ' ');
+                        legend.textContent = form2Data[key].split(' ')[0];
+                        fieldset.appendChild(legend);
+
+                        const label = document.createElement('label');
+                        label.setAttribute('for', key + '-details');
+                        console.log("------->", key)
+                        // label.textContent = key.replace(/-/g, ' ') + ' Details:';
+                        label.textContent = form2Data[key].split(' ').filter((item) => item !== form2Data[key].split(' ')[0]).join(' ');
+                        fieldset.appendChild(label);
+
+                        const input = document.createElement('input');
+                        input.setAttribute('type', 'text');
+                        input.setAttribute('id', key + '-details');
+                        input.setAttribute('name', key + '-details');
+                        fieldset.appendChild(input);
+
+                        form.appendChild(fieldset);
+                    }
+                }
+            }
+
+            const submitButton = document.createElement('button');
+            submitButton.setAttribute('type', 'submit');
+            submitButton.textContent = 'Submit';
+            form.appendChild(submitButton);
+
+            const previousButton = document.createElement('button');
+            previousButton.setAttribute('type', 'button');
+            previousButton.textContent = 'Previous';
+            previousButton.setAttribute('onclick', 'goToPage2()');
+            form.appendChild(previousButton);
+
+            container.appendChild(form);
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Details</h1>
+    </div>
+</body>
+</html>

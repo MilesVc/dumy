@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Information</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Event Information</h1>
+        <form id="form1">
+            <label for="date">Date:</label>
+            <input type="date" id="date" name="date" required><br>
+
+            <label for="party-name">Party Name:</label>
+            <input type="text" id="party-name" name="party-name" required><br>
+
+            <label for="address">Address:</label>
+            <input type="text" id="address" name="address" required><br>
+
+            <label for="contact">Contact:</label>
+            <input type="text" id="contact" name="contact" required><br>
+
+            <label for="days">Days:</label>
+            <input type="number" id="days" name="days" min="1" required><br>
+
+            <button type="button" onclick="goToPage2()">Next</button>
+        </form>
+    </div>
+    <script>
+        function goToPage2() {
+            const form1Data = new FormData(document.getElementById('form1'));
+            localStorage.setItem('form1Data', JSON.stringify(Object.fromEntries(form1Data.entries())));
+            window.location.href = 'page2.html';
+        }
+    </script>
+</body>
+</html>
