@@ -112,8 +112,12 @@
 
                         checkbox.addEventListener('change', updateDetails);
 
-                        dayFieldset.appendChild(checkbox);
-                        dayFieldset.appendChild(label);
+                        const wrapper = document.createElement('div');
+                        wrapper.classList.add('checkbox-wrapper');
+                        wrapper.appendChild(checkbox);
+                        wrapper.appendChild(label);
+
+                        dayFieldset.appendChild(wrapper);
                     });
                 });
 
