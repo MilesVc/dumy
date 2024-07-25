@@ -14,6 +14,8 @@ body {
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    max-width: 1200px;
 }
 
 h1 {
@@ -21,8 +23,9 @@ h1 {
 }
 
 label {
-    display: block;
+    display: inline-block;
     margin-top: 10px;
+    width: 150px;
 }
 
 input[type="text"],
@@ -52,6 +55,7 @@ button:hover {
 fieldset {
     border: 1px solid #ccc;
     padding: 10px;
+    margin-bottom: 20px;
 }
 
 legend {
@@ -60,4 +64,19 @@ legend {
 
 .dynamic-field {
     margin-top: 10px;
+}
+
+#form2 fieldset {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#form2 fieldset > label {
+    flex: 1 1 150px;
+    margin-right: 10px;
+}
+
+#form2 fieldset > input[type="checkbox"] {
+    margin-left: 10px;
+    margin-right: 5px;
 }

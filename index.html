@@ -35,6 +35,13 @@
         function calculateDays() {
             const dateFrom = new Date(document.getElementById('date-from').value);
             const dateTo = new Date(document.getElementById('date-to').value);
+            
+            if (dateTo < dateFrom) {
+                alert('To date cannot be earlier than from date.');
+                document.getElementById('date-to').value = '';
+                return;
+            }
+            
             const timeDiff = dateTo - dateFrom;
             const days = Math.ceil(timeDiff / (1000 * 3600 * 24)) + 1; // Include both start and end date
             document.getElementById('days').value = days;
