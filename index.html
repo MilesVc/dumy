@@ -10,8 +10,11 @@
     <div class="container">
         <h1>Event Information</h1>
         <form id="form1">
-            <label for="date">Date:</label>
-            <input type="date" id="date" name="date" required><br>
+            <label for="date-from">Date From:</label>
+            <input type="date" id="date-from" name="date-from" required><br>
+
+            <label for="date-to">Date To:</label>
+            <input type="date" id="date-to" name="date-to" required><br>
 
             <label for="party-name">Party Name:</label>
             <input type="text" id="party-name" name="party-name" required><br>
@@ -23,12 +26,23 @@
             <input type="text" id="contact" name="contact" required><br>
 
             <label for="days">Days:</label>
-            <input type="number" id="days" name="days" min="1" required><br>
+            <input type="number" id="days" name="days" readonly><br>
 
             <button type="button" onclick="goToPage2()">Next</button>
         </form>
     </div>
     <script>
+        function calculateDays() {
+            const dateFrom = new Date(document.getElementById('date-from').value);
+            const dateTo = new Date(document.getElementById('date-to').value);
+            const timeDiff = dateTo - dateFrom;
+            const days = Math.ceil(timeDiff / (1000 * 3600 * 24)) + 1; // Include both start and end date
+            document.getElementById('days').value = days;
+        }
+
+        document.getElementById('date-from').addEventListener('change', calculateDays);
+        document.getElementById('date-to').addEventListener('change', calculateDays);
+
         function goToPage2() {
             const form1Data = new FormData(document.getElementById('form1'));
             localStorage.setItem('form1Data', JSON.stringify(Object.fromEntries(form1Data.entries())));

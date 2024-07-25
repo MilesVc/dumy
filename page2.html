@@ -8,7 +8,6 @@
     <script>
         function goToPage3() {
             const form2Data = new FormData(document.getElementById('form2'));
-            console.log('Form2------------->', form2Data);
             localStorage.setItem('form2Data', JSON.stringify(Object.fromEntries(form2Data.entries())));
             window.location.href = 'page3.html';
         }
@@ -16,63 +15,65 @@
         function goToPage1() {
             window.location.href = 'index.html';
         }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const form1Data = JSON.parse(localStorage.getItem('form1Data'));
+            const days = form1Data.days;
+            const container = document.querySelector('.container');
+            const form = document.createElement('form');
+            form.setAttribute('id', 'form2');
+
+            for (let day = 1; day <= days; day++) {
+                const fieldset = document.createElement('fieldset');
+                const legend = document.createElement('legend');
+                legend.textContent = `Day ${day}`;
+                fieldset.appendChild(legend);
+
+                ['Breakfast', 'Lunch', 'Dinner'].forEach(meal => {
+                    const mealLegend = document.createElement('legend');
+                    mealLegend.textContent = meal;
+                    fieldset.appendChild(mealLegend);
+
+                    ['Welcome Drink', 'Starter', 'Main Course', 'Rice/Dal', 'Desserts', 'Sweets'].forEach(item => {
+                        const id = `${meal.toLowerCase()}-${item.toLowerCase().replace(/ /g, '-')}-day-${day}`;
+                        const checkbox = document.createElement('input');
+                        checkbox.type = 'checkbox';
+                        checkbox.id = id;
+                        checkbox.name = id;
+                        checkbox.value = `${meal} ${item} Day ${day}`;
+                        
+                        const label = document.createElement('label');
+                        label.setAttribute('for', id);
+                        label.textContent = item;
+                        
+                        fieldset.appendChild(checkbox);
+                        fieldset.appendChild(label);
+                        fieldset.appendChild(document.createElement('br'));
+                    });
+                });
+
+                form.appendChild(fieldset);
+            }
+
+            const nextButton = document.createElement('button');
+            nextButton.type = 'button';
+            nextButton.textContent = 'Next';
+            nextButton.setAttribute('onclick', 'goToPage3()');
+            form.appendChild(nextButton);
+
+            const previousButton = document.createElement('button');
+            previousButton.type = 'button';
+            previousButton.textContent = 'Previous';
+            previousButton.setAttribute('onclick', 'goToPage1()');
+            form.appendChild(previousButton);
+
+            container.appendChild(form);
+        });
     </script>
 </head>
 <body>
     <div class="container">
         <h1>Food Categories</h1>
-        <form id="form2">
-            <fieldset>
-                <legend>Breakfast</legend>
-                <input type="checkbox" id="breakfast-welcome-drink" name="breakfast-welcome-drink" value="Breakfast Welcome Drink">
-                <label for="breakfast-welcome-drink">Welcome Drink</label><br>
-                <input type="checkbox" id="breakfast-starter" name="breakfast-starter" value="Breakfast Starter">
-                <label for="breakfast-starter">Starter</label><br>
-                <input type="checkbox" id="breakfast-main-course" name="breakfast-main-course" value="Breakfast Main Course">
-                <label for="breakfast-main-course">Main Course</label><br>
-                <input type="checkbox" id="breakfast-rice-dal" name="breakfast-rice-dal" value="Breakfast Rice/Dal">
-                <label for="breakfast-rice-dal">Rice/Dal</label><br>
-                <input type="checkbox" id="breakfast-desserts" name="breakfast-desserts" value="Breakfast Desserts">
-                <label for="breakfast-desserts">Desserts</label><br>
-                <input type="checkbox" id="breakfast-sweets" name="breakfast-sweets" value="Breakfast Sweets">
-                <label for="breakfast-sweets">Sweets</label><br>
-            </fieldset>
-
-            <fieldset>
-                <legend>Lunch</legend>
-                <input type="checkbox" id="lunch-welcome-drink" name="lunch-welcome-drink" value="Lunch Welcome Drink">
-                <label for="lunch-welcome-drink">Welcome Drink</label><br>
-                <input type="checkbox" id="lunch-starter" name="lunch-starter" value="Lunch Starter">
-                <label for="lunch-starter">Starter</label><br>
-                <input type="checkbox" id="lunch-main-course" name="lunch-main-course" value="Lunch Main Course">
-                <label for="lunch-main-course">Main Course</label><br>
-                <input type="checkbox" id="lunch-rice-dal" name="lunch-rice-dal" value="Lunch Rice/Dal">
-                <label for="lunch-rice-dal">Rice/Dal</label><br>
-                <input type="checkbox" id="lunch-desserts" name="lunch-desserts" value="Lunch Desserts">
-                <label for="lunch-desserts">Desserts</label><br>
-                <input type="checkbox" id="lunch-sweets" name="lunch-sweets" value="Lunch Sweets">
-                <label for="lunch-sweets">Sweets</label><br>
-            </fieldset>
-
-            <fieldset>
-                <legend id="Dinner">Dinner</legend>
-                <input type="checkbox" id="dinner-welcome-drink" name="dinner-welcome-drink" value="Dinner Welcome Drink">
-                <label for="dinner-welcome-drink">Welcome Drink</label><br>
-                <input type="checkbox" id="dinner-starter" name="dinner-starter" value="Dinner Starter">
-                <label for="dinner-starter">Starter</label><br>
-                <input type="checkbox" id="dinner-main-course" name="dinner-main-course" value="Dinner Main Course">
-                <label for="dinner-main-course">Main Course</label><br>
-                <input type="checkbox" id="dinner-rice-dal" name="dinner-rice-dal" value="Dinner Rice/Dal">
-                <label for="dinner-rice-dal">Rice/Dal</label><br>
-                <input type="checkbox" id="dinner-desserts" name="dinner-desserts" value="Dinner Desserts">
-                <label for="dinner-desserts">Desserts</label><br>
-                <input type="checkbox" id="dinner-sweets" name="dinner-sweets" value="Dinner Sweets">
-                <label for="dinner-sweets">Sweets</label><br>
-            </fieldset>
-
-            <button type="button" onclick="goToPage3()">Next</button>
-            <button type="button" onclick="goToPage1()">Previous</button>
-        </form>
     </div>
 </body>
 </html>
