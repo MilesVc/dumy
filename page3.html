@@ -12,37 +12,47 @@
 
         document.addEventListener('DOMContentLoaded', function () {
             const form2Data = JSON.parse(localStorage.getItem('form2Data'));
+            const groupedData = {
+                'Breakfast': [],
+                'Lunch': [],
+                'Dinner': []
+            };
+
+            // Group form2Data by meal type
+            for (const key in form2Data) {
+                if (form2Data[key]) {
+                    const mealType = form2Data[key].split(' ')[0];
+                    groupedData[mealType].push({ key, value: form2Data[key] });
+                }
+            }
 
             const container = document.querySelector('.container');
             const form = document.createElement('form');
             form.setAttribute('action', 'submit.html');
             form.setAttribute('method', 'post');
 
-            if (form2Data) {
-                console.log("---->", form2Data)
-                for (const key in form2Data) {
-                    if (form2Data[key]) {
-                        const fieldset = document.createElement('fieldset');
-                        const legend = document.createElement('legend');
-                        // legend.textContent = key.replace(/-/g, ' ');
-                        legend.textContent = form2Data[key].split(' ')[0];
-                        fieldset.appendChild(legend);
+            // Create fieldsets for each meal type
+            for (const mealType in groupedData) {
+                if (groupedData[mealType].length > 0) {
+                    const fieldset = document.createElement('fieldset');
+                    const legend = document.createElement('legend');
+                    legend.textContent = mealType;
+                    fieldset.appendChild(legend);
 
+                    groupedData[mealType].forEach(item => {
                         const label = document.createElement('label');
-                        label.setAttribute('for', key + '-details');
-                        console.log("------->", key)
-                        // label.textContent = key.replace(/-/g, ' ') + ' Details:';
-                        label.textContent = form2Data[key].split(' ').filter((item) => item !== form2Data[key].split(' ')[0]).join(' ');
+                        label.setAttribute('for', item.key + '-details');
+                        label.textContent = item.value.split(' ').slice(1).join(' ');
                         fieldset.appendChild(label);
 
                         const input = document.createElement('input');
                         input.setAttribute('type', 'text');
-                        input.setAttribute('id', key + '-details');
-                        input.setAttribute('name', key + '-details');
+                        input.setAttribute('id', item.key + '-details');
+                        input.setAttribute('name', item.key + '-details');
                         fieldset.appendChild(input);
+                    });
 
-                        form.appendChild(fieldset);
-                    }
+                    form.appendChild(fieldset);
                 }
             }
 
