@@ -5,14 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Food Categories</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script>
-        function goToPage3() {
-            const form2Data = new FormData(document.getElementById('form2'));
-            localStorage.setItem('form2Data', JSON.stringify(Object.fromEntries(form2Data.entries())));
-            window.location.href = 'page3.html';
-        }
-
         function goToPage1() {
+            localStorage.removeItem('form2Data');
             window.location.href = 'index.html';
         }
 
@@ -45,6 +41,7 @@
             }
 
             const detailsContainer = document.getElementById('details-container');
+
             detailsContainer.innerHTML = ''; // Clear previous details
 
             for (const day in groupedData) {
@@ -69,15 +66,100 @@
                         input.setAttribute('type', 'text');
                         input.setAttribute('id', item.key + '-details');
                         input.setAttribute('name', item.key + '-details');
+                        input.value = form2Data[item.key + '-details'] || ''; // Pre-fill the input if details exist
                         mealFieldset.appendChild(input);
                         mealFieldset.appendChild(document.createElement('br'));
                     });
 
                     dayFieldset.appendChild(mealFieldset);
                 }
-
+                
                 detailsContainer.appendChild(dayFieldset);
             }
+        }
+
+        function createPDF() {
+            const form1Data = JSON.parse(localStorage.getItem('form1Data'));
+            const form2Data = JSON.parse(localStorage.getItem('form2Data')) || {};
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            doc.setFontSize(16);
+            doc.text("Event Information", 10, 10);
+            doc.setFontSize(12);
+
+            doc.setFont("helvetica", "bold");
+            doc.text(`Date From:`, 10, 20);
+            doc.setFont("helvetica", "normal");
+            doc.text(`${form1Data['date-from']}`, 40, 20);
+            doc.setFont("helvetica", "bold");
+            doc.text(`Date To:`, 100, 20);
+            doc.setFont("helvetica", "normal");
+            doc.text(`${form1Data['date-to']}`, 130, 20);
+            
+            doc.setFont("helvetica", "bold");
+            doc.text(`Party Name:`, 10, 30);
+            doc.setFont("helvetica", "normal");
+            doc.text(`${form1Data['party-name']}`, 40, 30);
+            
+            doc.setFont("helvetica", "bold");
+            doc.text(`Address:`, 10, 40);
+            doc.setFont("helvetica", "normal");
+            doc.text(`${form1Data['address']}`, 40, 40);
+            
+            doc.setFont("helvetica", "bold");
+            doc.text(`Contact:`, 10, 50);
+            doc.setFont("helvetica", "normal");
+            doc.text(`${form1Data['contact']}`, 40, 50);
+
+            let yOffset = 60;
+
+            const groupedData = {};
+            for (const key in form2Data) {
+                if (form2Data[key]) {
+                    const parts = key.split('-');
+                    const meal = parts[0];
+                    const day = parts[parts.length - 1];
+
+                    if (!groupedData[day]) {
+                        groupedData[day] = {};
+                    }
+
+                    if (!groupedData[day][meal]) {
+                        groupedData[day][meal] = [];
+                    }
+
+                    groupedData[day][meal].push({ key, value: form2Data[key] });
+                }
+            }
+
+            for (const day in groupedData) {
+                doc.setFontSize(14);
+                doc.setFont("helvetica", "bold");
+                doc.text(`Day ${day}`, 10, yOffset);
+                yOffset += 10;
+
+                for (const meal in groupedData[day]) {
+                    doc.setFontSize(12);
+                    doc.setFont("helvetica", "bold");
+                    doc.text(meal.charAt(0).toUpperCase() + meal.slice(1), 10, yOffset);
+                    yOffset += 10;
+
+                    groupedData[day][meal].forEach(item => {
+                        const detailValue = form2Data[item.key + '-details'];
+                        if (detailValue) {
+                            doc.setFont("helvetica", "normal");
+                            doc.text(`${item.value.split(' ').slice(1).join(' ')}: ${detailValue}`, 20, yOffset);
+                            yOffset += 10;
+                        }
+                    });
+                }
+            }
+
+            doc.save("event_information.pdf");
+            localStorage.removeItem('form2Data'); // Clear form2 data after PDF generation
+            localStorage.clear()
+            window.location.href = 'success.html';
         }
 
         document.addEventListener('DOMContentLoaded', function () {
@@ -93,12 +175,25 @@
                 dayLegend.textContent = `Day ${day}`;
                 dayFieldset.appendChild(dayLegend);
 
-                ['Breakfast', 'Lunch', 'Dinner'].forEach(meal => {
-                    const mealLegend = document.createElement('legend');
-                    mealLegend.textContent = meal;
-                    dayFieldset.appendChild(mealLegend);
+                const checkboxSection = document.createElement('div');
+                const inputSection = document.createElement('div');
+                checkboxSection.classList.add('checkbox-section');
+                inputSection.classList.add('input-section');
 
-                    ['Welcome Drink', 'Starter', 'Main Course', 'Rice/Dal', 'Desserts', 'Sweets'].forEach(item => {
+                ['Breakfast', 'Lunch', 'Dinner'].forEach(meal => {
+                    const mealSection = document.createElement('div');
+                    mealSection.classList.add('meal-section');
+
+                    const mealLabelDiv = document.createElement('div');
+                    mealLabelDiv.textContent = meal;
+                    mealLabelDiv.classList.add('meal-label');
+
+                    const mealCheckboxesDiv = document.createElement('div');
+                    mealCheckboxesDiv.classList.add('meal-checkboxes');
+                    // check box code for Breakfast
+
+                    if (meal=== "Breakfast"){
+                        ['Breakfast'].forEach(item => {
                         const id = `${meal.toLowerCase()}-${item.toLowerCase().replace(/ /g, '-')}-day-${day}`;
                         const checkbox = document.createElement('input');
                         checkbox.type = 'checkbox';
@@ -117,32 +212,94 @@
                         wrapper.appendChild(checkbox);
                         wrapper.appendChild(label);
 
-                        dayFieldset.appendChild(wrapper);
+                        mealCheckboxesDiv.appendChild(wrapper);
                     });
+                    }
+                    // check box code for Lunch
+                    else if (meal==="Lunch"){
+                        ['Welcome Drink', 'Starter','Main Course','Rice/Biryani','Icecream','Roti/Naan', 'Desserts', 'Sweets','Extra'].forEach(item => {
+                        const id = `${meal.toLowerCase()}-${item.toLowerCase().replace(/ /g, '-')}-day-${day}`;
+                        const checkbox = document.createElement('input');
+                        checkbox.type = 'checkbox';
+                        checkbox.id = id;
+                        checkbox.name = id;
+                        checkbox.value = `${meal} ${item}`;
+                        
+                        const label = document.createElement('label');
+                        label.setAttribute('for', id);
+                        label.textContent = item;
+
+                        checkbox.addEventListener('change', updateDetails);
+
+                        const wrapper = document.createElement('div');
+                        wrapper.classList.add('checkbox-wrapper');
+                        wrapper.appendChild(checkbox);
+                        wrapper.appendChild(label);
+
+                        mealCheckboxesDiv.appendChild(wrapper);
+                    });
+                    }
+
+                    // check box code for dinner
+                    else{
+                        ['Welcome Drink', 'Starter','Main Course','Rice/Biryani','Icecream','Roti/Naan', 'Desserts', 'Sweets','Extra'].forEach(item => {
+                        const id = `${meal.toLowerCase()}-${item.toLowerCase().replace(/ /g, '-')}-day-${day}`;
+                        const checkbox = document.createElement('input');
+                        checkbox.type = 'checkbox';
+                        checkbox.id = id;
+                        checkbox.name = id;
+                        checkbox.value = `${meal} ${item}`;
+                        
+                        const label = document.createElement('label');
+                        label.setAttribute('for', id);
+                        label.textContent = item;
+
+                        checkbox.addEventListener('change', updateDetails);
+
+                        const wrapper = document.createElement('div');
+                        wrapper.classList.add('checkbox-wrapper');
+                        wrapper.appendChild(checkbox);
+                        wrapper.appendChild(label);
+
+                        mealCheckboxesDiv.appendChild(wrapper);
+                    });
+
+                    }
+
+                    mealSection.appendChild(mealLabelDiv);
+                    mealSection.appendChild(mealCheckboxesDiv);
+                    checkboxSection.appendChild(mealSection);
                 });
 
+                dayFieldset.appendChild(checkboxSection);
+                dayFieldset.appendChild(inputSection);
                 form.appendChild(dayFieldset);
             }
 
-            const nextButton = document.createElement('button');
-            nextButton.type = 'button';
-            nextButton.textContent = 'Next';
-            nextButton.setAttribute('onclick', 'goToPage3()');
-            form.appendChild(nextButton);
+            const detailsContainer = document.createElement('div');
+            detailsContainer.setAttribute('id', 'details-container');
+            form.appendChild(detailsContainer);
+
+            const buttonsContainer = document.createElement('div');
+            buttonsContainer.setAttribute('id', 'buttons-container');
+            buttonsContainer.classList.add('buttons-container');
 
             const previousButton = document.createElement('button');
             previousButton.type = 'button';
             previousButton.textContent = 'Previous';
             previousButton.setAttribute('onclick', 'goToPage1()');
-            form.appendChild(previousButton);
+            buttonsContainer.appendChild(previousButton);
 
+            const submitButton = document.createElement('button');
+            submitButton.type = 'button';
+            submitButton.textContent = 'Submit';
+            submitButton.setAttribute('onclick', 'createPDF()');
+            // submitButton.setAttribute('onClick', window)
+            buttonsContainer.appendChild(submitButton);
+            form.appendChild(buttonsContainer);
             container.appendChild(form);
-
-            // Add a container for dynamically displaying details
-            const detailsContainer = document.createElement('div');
-            detailsContainer.setAttribute('id', 'details-container');
-            container.appendChild(detailsContainer);
-        });
+            displayDetails();
+        })
     </script>
 </head>
 <body>
