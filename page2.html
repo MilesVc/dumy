@@ -22,6 +22,8 @@
             const form2Data = JSON.parse(localStorage.getItem('form2Data')) || {};
             const groupedData = {};
 
+            console.log("----->1",form2Data, form2Data?.details)
+            
             for (const key in form2Data) {
                 if (form2Data[key]) {
                     const parts = key.split('-');
@@ -43,6 +45,12 @@
             const detailsContainer = document.getElementById('details-container');
 
             detailsContainer.innerHTML = ''; // Clear previous details
+            console.log("--->2", groupedData, groupedData.details)
+
+            if(groupedData.details){
+                delete groupedData.details;
+            }
+
 
             for (const day in groupedData) {
                 const dayFieldset = document.createElement('fieldset');
@@ -51,6 +59,7 @@
                 dayFieldset.appendChild(dayLegend);
 
                 for (const meal in groupedData[day]) {
+                    console.log("----->",meal)
                     const mealFieldset = document.createElement('fieldset');
                     const mealLegend = document.createElement('legend');
                     mealLegend.textContent = meal.charAt(0).toUpperCase() + meal.slice(1);
