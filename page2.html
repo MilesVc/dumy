@@ -141,6 +141,10 @@
                     groupedData[day][meal].push({ key, value: form2Data[key] });
                 }
             }
+            
+            if(groupedData.details){
+                delete groupedData.details;
+            }
 
             for (const day in groupedData) {
                 doc.setFontSize(14);
