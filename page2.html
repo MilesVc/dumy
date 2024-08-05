@@ -105,32 +105,31 @@
             const y1Offset = (pageHeight - watermarkHeight) / 2;
             doc.addImage(watermarkBase64, 'PNG', xOffset, y1Offset, watermarkWidth, watermarkHeight, '', 'SLOW');
 
-            doc.setFontSize(16);
-            doc.text("Event Information", 10, 10);
+            // doc.setFontSize(16);
+            // doc.text("Menu", 10, 10);
             doc.setFontSize(12);
-
-            doc.setFont("helvetica", "bold");
+            doc.setFont("roboto", "bold");
             doc.text(`Date From:`, 10, 20);
-            doc.setFont("helvetica", "normal");
+            doc.setFont("roboto", "normal");
             doc.text(`${form1Data['date-from']}`, 40, 20);
-            doc.setFont("helvetica", "bold");
+            doc.setFont("roboto", "bold");
             doc.text(`Date To:`, 100, 20);
-            doc.setFont("helvetica", "normal");
+            doc.setFont("roboto", "normal");
             doc.text(`${form1Data['date-to']}`, 130, 20);
 
-            doc.setFont("helvetica", "bold");
+            doc.setFont("roboto", "bold");
             doc.text(`Party Name:`, 10, 30);
-            doc.setFont("helvetica", "normal");
+            doc.setFont("roboto", "normal");
             doc.text(`${form1Data['party-name']}`, 40, 30);
 
-            doc.setFont("helvetica", "bold");
+            doc.setFont("roboto", "bold");
             doc.text(`Address:`, 10, 40);
-            doc.setFont("helvetica", "normal");
+            doc.setFont("roboto", "normal");
             doc.text(`${form1Data['address']}`, 40, 40);
 
-            doc.setFont("helvetica", "bold");
+            doc.setFont("roboto", "bold");
             doc.text(`Contact:`, 10, 50);
-            doc.setFont("helvetica", "normal");
+            doc.setFont("roboto", "normal");
             doc.text(`${form1Data['contact']}`, 40, 50);
 
             let yOffset = 60;
@@ -159,20 +158,20 @@
 
             for (const day in groupedData) {
                 doc.setFontSize(14);
-                doc.setFont("helvetica", "bold");
+                doc.setFont("roboto", "bold");
                 doc.text(`Day ${day}`, 10, yOffset);
                 yOffset += 10;
 
                 for (const meal in groupedData[day]) {
                     doc.setFontSize(12);
-                    doc.setFont("helvetica", "bold");
+                    doc.setFont("roboto", "bold");
                     doc.text(meal.charAt(0).toUpperCase() + meal.slice(1), 10, yOffset);
                     yOffset += 10;
 
                     groupedData[day][meal].forEach(item => {
                         const detailValue = form2Data[item.key + '-details'];
                         if (detailValue) {
-                            doc.setFont("helvetica", "normal");
+                            doc.setFont("roboto", "normal");
                             doc.text(`${item.value.split(' ').slice(1).join(' ')}: ${detailValue}`, 20, yOffset);
                             yOffset += 10;
                         }
