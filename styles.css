@@ -65,7 +65,11 @@ button {
 .meal-section {
     display: flex;
     gap: 20px;
-    margin-bottom: 6px;
+    margin-bottom: 16px;
+    /* outline: 1px solid green; */
+    justify-content: flex-start;
+    align-items: flex-start;
+    /* border-bottom: 1px solid #f6f6f6; */
 }
 
 #date-from, #date-to {
@@ -103,6 +107,7 @@ fieldset {
 
 .meal-label {
     flex: 1;
+    font-weight: 600;
 }
 
 .meal-checkboxes {
@@ -168,4 +173,9 @@ label{
 
 #newButton{
     max-width: 250px;
+}
+
+legend{
+    /* outline: 1px solid red; */
+    font-weight: 700;
 }
