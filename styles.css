@@ -157,3 +157,15 @@ label{
     margin-bottom: 5px;
     /* font-weight: bold; */
 }
+
+#containerSubmit{
+    max-width: 600px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center ;
+}
+
+#newButton{
+    max-width: 250px;
+}
