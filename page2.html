@@ -252,31 +252,31 @@
                     mealCheckboxesDiv.classList.add('meal-checkboxes');
                     // check box code for Breakfast
 
-                    if (meal === "Breakfast") {
-                        ['Breakfast'].forEach(item => {
-                            const id = `${meal.toLowerCase()}-${item.toLowerCase().replace(/ /g, '-')}-day-${day}`;
-                            const checkbox = document.createElement('input');
-                            checkbox.type = 'checkbox';
-                            checkbox.id = id;
-                            checkbox.name = id;
-                            checkbox.value = `${meal} ${item}`;
+                    // if (meal === "Breakfast") {
+                    //     ['Breakfast'].forEach(item => {
+                    //         const id = `${meal.toLowerCase()}-${item.toLowerCase().replace(/ /g, '-')}-day-${day}`;
+                    //         const checkbox = document.createElement('input');
+                    //         checkbox.type = 'checkbox';
+                    //         checkbox.id = id;
+                    //         checkbox.name = id;
+                    //         checkbox.value = `${meal} ${item}`;
 
-                            const label = document.createElement('label');
-                            label.setAttribute('for', id);
-                            label.textContent = item;
+                    //         const label = document.createElement('label');
+                    //         label.setAttribute('for', id);
+                    //         label.textContent = item;
 
-                            checkbox.addEventListener('change', updateDetails);
+                    //         checkbox.addEventListener('change', updateDetails);
 
-                            const wrapper = document.createElement('div');
-                            wrapper.classList.add('checkbox-wrapper');
-                            wrapper.appendChild(checkbox);
-                            wrapper.appendChild(label);
+                    //         const wrapper = document.createElement('div');
+                    //         wrapper.classList.add('checkbox-wrapper');
+                    //         wrapper.appendChild(checkbox);
+                    //         wrapper.appendChild(label);
 
-                            mealCheckboxesDiv.appendChild(wrapper);
-                        });
-                    }
+                    //         mealCheckboxesDiv.appendChild(wrapper);
+                    //     });
+                    // }
                     // check box code for Lunch
-                    else if (meal === "Lunch") {
+                    if (meal === "Lunch") {
                         ["Welcome Juice", "Moving Starter", "Delhi Darbar", "South Indian", "Chinese", "Italian Pizza", "Punjab ki Aur Se", "Daal/ Rice", "Indian Bread", "Gujarat ki Shaan", "Farsan", "Liquid", "Cream", "Dry Fruit Sweets", "Matho", "Bangali Sweet", "Duth Ghanga", "Mocktail", "Milkshake"].forEach(item => {
                             const id = `${meal.toLowerCase()}-${item.toLowerCase().replace(/ /g, '-')}-day-${day}`;
                             const checkbox = document.createElement('input');
