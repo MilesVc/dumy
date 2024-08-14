@@ -84,6 +84,7 @@ button {
     /* outline: 1px solid green; */
     justify-content: flex-start;
     align-items: flex-start;
+    /* border-right: 1px solid red; */
     /* border-bottom: 1px solid #f6f6f6; */
 }
 
@@ -97,6 +98,18 @@ button {
     gap: 20px;
 }
 
+.checkboxContainer{
+    /* outline: 1px solid red; */
+    /* background-color: #CCE5FF; */
+    background-image: url("./bg.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    object-fit: cover;
+    border: 1px solid #555;
+    height: 616px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;;
+}
+
 #container1 {
     max-width: 600px;
 }
@@ -108,6 +121,7 @@ br{
 
 fieldset {
     margin-bottom: 15px;
+    /* background-color: #007BFF; */
 }
 /* .inputFieldset label{ */
     /* outline: 1px solid red; */
@@ -121,6 +135,9 @@ fieldset {
     /* min-height: fit-content; */
     flex-direction: column;
     min-width: 500px;
+    /* outline: 1px solid red; */
+    border: 1px solid #E5E5E5;
+    /* box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px; */
     /* gap: 20px ; */
     /* padding: ; */
 }
@@ -139,6 +156,7 @@ fieldset {
 .checkbox-section{
     /* outline: 1px solid red;  */
     display: flex;
+    /* margin: 0; */
     /* flex-direction: column; */
     /* justify-content: end;
     align-items: end; */
@@ -251,6 +269,7 @@ legend{
 .InputDay{
     /* outline: 4px solid blue; */
     display: flex;
+    gap: 16px;
 }
 
 .FirstPageInput{
