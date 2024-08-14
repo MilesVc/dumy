@@ -255,6 +255,7 @@ label{
     justify-content: center;
     flex-direction: column;
     align-items: center ;
+    background-color: #FFF4EB;
 }
 
 #newButton{
