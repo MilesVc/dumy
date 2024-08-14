@@ -143,6 +143,10 @@ fieldset {
     min-width: 500px;
     /* outline: 1px solid red; */
     border: 1px solid #E5E5E5;
+    background-image: url("./bg2.svg");
+    /* background-repeat: no-repeat; */
+    /* object-fit: cover; */
+    /* background-size: contain; */
     /* box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px; */
     /* gap: 20px ; */
     /* padding: ; */
