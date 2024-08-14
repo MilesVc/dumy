@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -47,13 +48,15 @@
             }
 
             for (const day in groupedData) {
-                const dayFieldset = document.createElement('fieldset');
-                const dayLegend = document.createElement('legend');
-                dayLegend.textContent = `Day ${day}`;
-                dayFieldset.appendChild(dayLegend);
+                const dayFieldset = document.createElement('div');
+                dayFieldset.className = "InputDay"
+                // const dayLegend = document.createElement('legend');
+                // dayLegend.textContent = `Day ${day}`;
+                // dayFieldset.appendChild(dayLegend);
 
                 for (const meal in groupedData[day]) {
                     const mealFieldset = document.createElement('fieldset');
+                    mealFieldset.className = "inputFieldset"
                     const mealLegend = document.createElement('legend');
                     mealLegend.textContent = meal.charAt(0).toUpperCase() + meal.slice(1);
                     mealFieldset.appendChild(mealLegend);
@@ -125,13 +128,14 @@
             // Header Information
             doc.setFontSize(12);
             doc.setFont("helvetica", "bold");
-            doc.text(`Date From:`, 10, yOffset);
+            doc.text(`Date:`, 10, yOffset);
             doc.setFont("helvetica", "normal");
-            doc.text(`${form1Data['date-from']}`, 40, yOffset);
+            // console.log(form1Data)
+            doc.text(`${form1Data['event-date']}`, 40, yOffset);
             doc.setFont("helvetica", "bold");
-            doc.text(`Date To:`, 100, yOffset);
-            doc.setFont("helvetica", "normal");
-            doc.text(`${form1Data['date-to']}`, 130, yOffset);
+            // doc.text(`Date To:`, 100, yOffset);
+            // doc.setFont("helvetica", "normal");
+            // doc.text(`${form1Data['date-to']}`, 130, yOffset);
 
             yOffset += 10;
             checkAndAddPage();
@@ -185,10 +189,10 @@
 
             // Add Details to PDF
             for (const day in groupedData) {
-                doc.setFontSize(14);
-                doc.setFont("helvetica", "bold");
-                doc.text(`Day ${day}`, 10, yOffset);
-                yOffset += 10;
+                // doc.setFontSize(14);
+                // doc.setFont("helvetica", "bold");
+                // doc.text(`Day ${day}`, 10, yOffset);
+                // yOffset += 10;
                 checkAndAddPage();
 
                 for (const meal in groupedData[day]) {
@@ -211,7 +215,7 @@
             }
 
             doc.save("event_information.pdf");
-            localStorage.clear();
+            // localStorage.clear();
             window.location.href = 'success.html';
         }
 
@@ -225,15 +229,15 @@
             for (let day = 1; day <= days; day++) {
                 const dayFieldset = document.createElement('fieldset');
                 const dayLegend = document.createElement('legend');
-                dayLegend.textContent = `Day ${day}`;
-                dayFieldset.appendChild(dayLegend);
+                // dayLegend.textContent = `${Date}`;
+                // dayFieldset.appendChild(dayLegend);
 
                 const checkboxSection = document.createElement('div');
                 const inputSection = document.createElement('div');
                 checkboxSection.classList.add('checkbox-section');
                 inputSection.classList.add('input-section');
 
-                ['Breakfast', 'Lunch', 'Dinner'].forEach(meal => {
+                ['Lunch', 'Dinner'].forEach(meal => {
                     const mealSection = document.createElement('div');
                     mealSection.classList.add('meal-section');
 
@@ -332,32 +336,45 @@
             const detailsContainer = document.createElement('div');
             detailsContainer.setAttribute('id', 'details-container');
             form.appendChild(detailsContainer);
-
-            const buttonsContainer = document.createElement('div');
-            buttonsContainer.setAttribute('id', 'buttons-container');
-            buttonsContainer.classList.add('buttons-container');
-
-            const previousButton = document.createElement('button');
-            previousButton.type = 'button';
-            previousButton.textContent = 'Previous';
-            previousButton.setAttribute('onclick', 'goToPage1()');
-            buttonsContainer.appendChild(previousButton);
-
-            const submitButton = document.createElement('button');
-            submitButton.type = 'button';
-            submitButton.textContent = 'Submit';
-            submitButton.setAttribute('onclick', 'createPDF()');
-            // submitButton.setAttribute('onClick', window)
-            buttonsContainer.appendChild(submitButton);
-            form.appendChild(buttonsContainer);
             container.appendChild(form);
             displayDetails();
+            // localStorage.clear();
         })
+
     </script>
 </head>
+
 <body>
     <div class="container">
-        <h1>Food Categories</h1>
+        <div class="heading">
+            <h1>Food Categories</h1>
+            <div class="buttons">
+                <button onclick="goToPage1()">Previous</button>
+                <button onclick="createPDF()">Submit</button>
+            </div>
+        </div>
+
+
+        <!-- <script>
+        const buttonsContainer = document.createElement('div');
+        buttonsContainer.setAttribute('id', 'buttons-container');
+        buttonsContainer.classList.add('buttons-container');
+
+        const previousButton = document.createElement('button');
+        previousButton.type = 'button';
+        previousButton.textContent = 'Previous';
+        previousButton.setAttribute('onclick', 'goToPage1()');
+        buttonsContainer.appendChild(previousButton);
+
+        const submitButton = document.createElement('button');
+        submitButton.type = 'button';
+        submitButton.textContent = 'Submit';
+        submitButton.setAttribute('onclick', 'createPDF()');
+        // submitButton.setAttribute('onClick', window)
+        buttonsContainer.appendChild(submitButton);
+        form.appendChild(buttonsContainer);
+        </script> -->
     </div>
 </body>
+
 </html>
