@@ -14,6 +14,7 @@
     <div class="container" id="container1" style="display: none;">
         <h1>Event Information</h1>
         <form id="form1">
+            <div id="firstPageInputs">
             <div class="form-group">
                 <label for="event-date">Event Date:</label>
                 <input type="date" timezone="[timezone]" id="event-date" name="event-date" class="FirstPageInput" required>
@@ -37,6 +38,7 @@
             <div class="form-group" id="daysInput">
                 <label for="days">Days:</label>
                 <input type="number" id="days" name="days" class="FirstPageInput" readonly>
+            </div>
             </div>
 
             <button type="button" onclick="goToPage2()">Next</button>
