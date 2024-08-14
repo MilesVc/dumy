@@ -67,7 +67,7 @@ button {
     padding: 10px 15px;
     border: none;
     border-radius: 5px;
-    background-color: #007BFF;
+    background-color: #FF881D;
     color: white;
     cursor: pointer;
     width: 100%;
@@ -222,7 +222,7 @@ label{
 }
 #buttons-container button{
     gap:10px;
-    background-color: #007BFF;
+    background-color: #FF881D;
     padding: 10px;
 }
 
