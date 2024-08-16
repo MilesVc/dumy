@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.6/lottie.min.js"></script>
 </head>
+
 <body>
     <div id="loader" class="loader-container"></div>
     <div class="container" id="container1" style="display: none;">
@@ -16,7 +18,8 @@
             <div id="firstPageInputs">
                 <div class="form-group">
                     <label for="event-date">Event Date:</label>
-                    <input type="date" timezone="[timezone]" id="event-date" name="event-date" class="FirstPageInput" required>
+                    <input type="date" timezone="[timezone]" id="event-date" name="event-date" class="FirstPageInput"
+                        required>
                 </div>
 
                 <div class="form-group">
@@ -62,6 +65,9 @@
     </style>
 
     <script>
+        // // Change the URL and reload the page
+        // window.location.href = '/Event-Information';
+
         window.onload = function () {
             var loader = lottie.loadAnimation({
                 container: document.getElementById('loader'),
