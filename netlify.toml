@@ -6,3 +6,7 @@ status = 200
 from = "/food-categories"
 to = "/page2.html"
 status = 200
+[[redirects]]
+from = "/success"
+to = "/success.html"
+status = 200
