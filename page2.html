@@ -10,7 +10,7 @@
     <script>
         function goToPage1() {
             localStorage.removeItem('form2Data');
-            window.location.href = '/event-info';
+            window.location.href = '/index.html';
         }
 
         function updateDetails() {
@@ -91,6 +91,9 @@
         }
         function createPDF() {
             const form1Data = JSON.parse(localStorage.getItem('form1Data'));
+            // const waiterNeededInput = document.querySelector('input[name="waiterNeeded"]:checked');
+            // console.log("----->",waiterNeededInput);
+            // const waiterNeeded = waiterNeededInput ? waiterNeededInput.value : 'Not Specified'; // Add a fallback if no selection
             const form2Data = JSON.parse(localStorage.getItem('form2Data')) || {};
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
@@ -171,6 +174,23 @@
             yOffset = wrapText(form1Data['contact'], 40, yOffset, 150);
 
             yOffset += 10;
+            // checkAndAddPage();
+            // doc.setFont("helvetica", "bold");
+            // doc.text(20, 20, 'Selected Menu Type: ' + wantWaiter);
+            // doc.setFont("helvetica", "normal");
+
+            // yOffset +=10;
+            // checkAndAddPage()
+
+            // doc.text(`Waiter Needed: ${waiterNeeded}`,10, yOffset); // Add Waiter Needed info
+            // yOffset += 10;
+            // checkAndAddPage();
+            // Waiter Needed information
+            const waiterNeeded = form1Data['waiterNeeded'] || 'Not Specified';
+            doc.setFont("helvetica", "bold");
+            doc.text(`Waiter Needed: ${waiterNeeded}`, 10, yOffset);
+            doc.setFont("helvetica", "normal");
+            yOffset += 10;
             checkAndAddPage();
 
             // Data Grouping
@@ -218,7 +238,7 @@
             }
 
             doc.save("event_information.pdf");
-            window.location.href = '/success';
+            window.location.href = 'success.html';
         }
 
         document.addEventListener('DOMContentLoaded', function () {

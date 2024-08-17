@@ -41,6 +41,15 @@
                     <label for="days">Days:</label>
                     <input type="number" id="days" name="days" class="FirstPageInput" readonly>
                 </div>
+                <div class="form-group">
+                    <label for="waiterNeededYes">Waiter Needed:</label>
+                    <label>
+                        <input type="radio" name="waiterNeeded" value="Yes"> Yes
+                    </label>
+                    <label>
+                        <input type="radio" name="waiterNeeded" value="No"> No
+                    </label>
+                </div>
             </div>
 
             <button type="button" onclick="goToPage2()" id="submitButtonForm1">Next</button>
@@ -109,7 +118,7 @@
             const form1Data = new FormData(document.getElementById('form1'));
             // console.log("----------->pag1",form1Data)
             localStorage.setItem('form1Data', JSON.stringify(Object.fromEntries(form1Data.entries())));
-            window.location.href = '/food-categories';
+            window.location.href = '/page2.html';
         }
     </script>
 </body>
